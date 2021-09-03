@@ -98,7 +98,7 @@ public class GamePanel extends JPanel {
         
         inputHandler = null;
         
-        inputHandler = new InputHandler("again"+again++);
+        inputHandler = new InputHandler();
         inputHandler.init(this);
         inputHandler.setGameState(mainPanel.getGameState());
         

@@ -29,7 +29,7 @@ public class GameState implements IGameState {
     boolean areBothPlayersComputers;
     
     // lock when game is over/restarted
-    private final Object stateLock = new Object();
+    private final Object STATE_LOCK = new Object();
     
     private int moveCounter;
     
@@ -37,14 +37,11 @@ public class GameState implements IGameState {
         this.isGameOver = false;
         this.tokens = new ConcurrentLinkedQueue<>();
         this.grid = new TokenType[n][m];
-        
-        initResetGameState();
-        
+    
         Player p1 = PlayerFactory.getHumanPlayer(this);
         Player p2 = PlayerFactory.getHumanPlayer(this);
         
-        this.currentPlayers = new CurrentPlayers(p1, p2);
-        areBothPlayersComputers = false;
+        restartOrInitializeGame(p1, p2);
     }
     
     public void setNewPlayer(PlayerType newPlayerType, TokenType playerColor) {
@@ -62,13 +59,16 @@ public class GameState implements IGameState {
         System.out.println("Are both computers: " + areBothPlayersComputers);
     }
     
-    public void initResetGameState() {
+    public void restartOrInitializeGame(Player p1, Player p2) {
         this.isGameOver = false;
         this.tokens = new ConcurrentLinkedQueue<>();
         this.grid = new TokenType[n][m];
         for (int i=0; i<n; i++) for (int j=0; j<m; j++) {
             grid[i][j] = TokenType.NONE;
         }
+        
+        this.currentPlayers = new CurrentPlayers(p1, p2);
+        //areBothPlayersComputers = false;
     }
     
     @Override
@@ -102,14 +102,6 @@ public class GameState implements IGameState {
         return () -> {
             while (!t.drop()) { PanelPainter.sleep(144); }
         };
-    }
-    
-    public JButton getResetButton() {
-        JButton btn = new JButton("Reset");
-        btn.addActionListener(a -> initResetGameState());
-        btn.setBounds(new Rectangle(100, 25, 80, 40));
-        btn.setFocusable(false);
-        return btn;
     }
     
     public void checkIfGameOver() {
@@ -320,7 +312,7 @@ public class GameState implements IGameState {
     @Override
     public void setGrid(TokenType[][] grid) { throw new RuntimeException("Not done yet."); }
     
-    public Object getStateLock() { return stateLock; }
+    public Object getSTATE_LOCK() { return STATE_LOCK; }
     // predefined diags to check
     public static final ArrayList<ArrayList<Pair<Integer, Integer>>> diags1;
     public static final ArrayList<ArrayList<Pair<Integer, Integer>>> diags2;

@@ -26,9 +26,7 @@ public class InputHandler implements MouseMotionListener, MouseListener, IMoving
     
     Point mouse = new Point(0, 0);
     
-    private final String x;
-    
-    public InputHandler(String x) { this.x=x; }
+    public InputHandler() {}
     
     public void init(GamePanel gamePanel) {
         this.activeColumnIndex = -1;
@@ -101,8 +99,6 @@ public class InputHandler implements MouseMotionListener, MouseListener, IMoving
     public void mouseClicked(MouseEvent e) {
         this.mouse = e.getPoint();
         if (gameState.isGameOver()) return;
-        
-        System.out.println("CLICKED: " + x);
         
         CompletableFuture
                 // make a move and process it

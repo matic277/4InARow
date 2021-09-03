@@ -21,7 +21,7 @@ public class Main {
         MainPanel panel = new MainPanel(gameState);
         InputHandler inputHandler = panel.getGamePanel().getInputHandler();
         gameState.setInputHandler(inputHandler);
-        gameState.getCurrentPlayers().redPlayer.player.getPlayer().setMovingStrat(inputHandler);
+        gameState.getCurrentPlayers().redPlayer   .player.getPlayer().setMovingStrat(inputHandler);
         gameState.getCurrentPlayers().yellowPlayer.player.getPlayer().setMovingStrat(inputHandler);
     }
 

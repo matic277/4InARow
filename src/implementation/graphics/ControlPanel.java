@@ -19,6 +19,8 @@ public class ControlPanel extends JPanel{
     
     JComboBox<PlayerType> redPlayerDropdown;
     JComboBox<PlayerType> yellowPlayerDropdown;
+    
+    JButton restartBtn;
 
     public ControlPanel(MainPanel parent, GameState gameState) {
         this.mainPanel = parent;
@@ -28,6 +30,7 @@ public class ControlPanel extends JPanel{
         initDepthSlider();
         initRadSlider();
         initPlayerPickers();
+        initRestartButton();
     }
     
     private void initRadSlider() {
@@ -132,13 +135,14 @@ public class ControlPanel extends JPanel{
         
         redPlayerDropdown = new JComboBox<>(PlayerType.values());
         redPlayerDropdown.setBackground(Color.red);
-        redPlayerDropdown.setAlignmentX(Component.CENTER_ALIGNMENT);
+        redPlayerDropdown.setAlignmentX(Component.CENTER_ALIGNMENT); // not working but whatever
         redPlayerDropdown.setMaximumSize(new Dimension(150, 30));
         redPlayerDropdown.addActionListener(a -> setPlayer((PlayerType)redPlayerDropdown.getSelectedItem(), TokenType.RED));
         
         yellowPlayerDropdown = new JComboBox<>(PlayerType.values());
-        yellowPlayerDropdown.setMaximumSize(new Dimension(150, 30));
         yellowPlayerDropdown.setBackground(Color.yellow);
+        yellowPlayerDropdown.setAlignmentX(Component.CENTER_ALIGNMENT);
+        yellowPlayerDropdown.setMaximumSize(new Dimension(150, 30));
         yellowPlayerDropdown.addActionListener(a -> setPlayer((PlayerType)yellowPlayerDropdown.getSelectedItem(), TokenType.YELLOW));
         
         container.add(title1);
@@ -148,10 +152,19 @@ public class ControlPanel extends JPanel{
         this.add(container);
     }
     
+    private void initRestartButton() {
+        restartBtn = new JButton("Restart");
+        restartBtn.addActionListener(a -> gameState.restartOrInitializeGame(
+                gameState.getCurrentPlayers().getCurrentPlayer(),
+                gameState.getCurrentPlayers().getNextPlayer()));
+        restartBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+        this.add(new JLabel(" "));
+        this.add(restartBtn);
+    }
+    
     private void setPlayer(PlayerType playerType, TokenType tokenColor) {
         System.out.println("try to set new player");
         gameState.setNewPlayer(playerType, tokenColor);
     }
-    
-    
 }

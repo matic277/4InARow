@@ -56,6 +56,9 @@ public class CurrentPlayers {
     public TokenType getTokenType() { return currentPlayer.player.getTokenType(); }
     public Pair<Player, Player> getBothPlayers() { return new Pair<>(redPlayer.player, yellowPlayer.player); }
     
+    public Player getCurrentPlayer() { return this.currentPlayer.player; }
+    public Player getNextPlayer() { return this.currentPlayer.next.player; }
+    
     public static class SubPlayer {
         public Player player;
         SubPlayer next;
