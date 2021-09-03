@@ -49,6 +49,7 @@ public class MiniMaxMovingStrategy implements IMovingStrategy {
         if (gameState.checkIfGameOver(state)) {
             System.out.println("GAMEOVER: " + new Pair<>(player == 1 ? Double.NEGATIVE_INFINITY : Double.POSITIVE_INFINITY, col));
             return new Pair<>(player == 1 ? Double.NEGATIVE_INFINITY : Double.POSITIVE_INFINITY, col);
+            //return eval(state);
         }
         if (depth == 0) {
             System.out.println("\n -> 0 At depth [" + depth + "], returning: " + new Pair<>(eval(state), col));
