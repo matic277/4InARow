@@ -31,7 +31,7 @@ public class MiniMaxMovingStrategy implements IMovingStrategy {
         initState();
         //System.out.println("--------------------------------------------------------starting--------------------------------------------------------");
         Pair<Double, Integer> result = minimax(state, 2, depth, 3);
-        //System.out.println("ended with move: " + result.getB());
+        System.out.println("minimax making move: " + result.getB());
         return result.getB();
     }
     
@@ -49,14 +49,11 @@ public class MiniMaxMovingStrategy implements IMovingStrategy {
         if (gameState.checkIfGameOver(state)) {
             System.out.println("GAMEOVER: " + new Pair<>(player == 1 ? Double.NEGATIVE_INFINITY : Double.POSITIVE_INFINITY, col));
             return new Pair<>(player == 1 ? Double.NEGATIVE_INFINITY : Double.POSITIVE_INFINITY, col);
-            //return eval(state);
         }
         if (depth == 0) {
-            System.out.println("\n -> 0 At depth [" + depth + "], returning: " + new Pair<>(eval(state), col));
-            print(state);
+            //print(state);
             return new Pair<>(eval(state), col);
         }
-        List<Pair<Double, Integer>> states = new ArrayList<>(8);
         
         // max
         if (player == 1) {
@@ -67,19 +64,11 @@ public class MiniMaxMovingStrategy implements IMovingStrategy {
                 dropTokenInColumn(stateCopy, freeCol, player);
                 Pair<Double, Integer> currentEval = minimax(stateCopy, 2, depth - 1, freeCol);
                 
-//                print(state);
-//                System.out.println(currentEval+"\n");
-//                states.add(currentEval);
-                
-//                System.out.println("\nDepth[" + depth + "] -> Comparing (current, max): " + currentEval + ", " + maxEval);
                 if (currentEval.getA() >= maxEval.getA()) {
                     maxEval.setA(currentEval.getA());
                     maxEval.setB(freeCol);
                 }
-//                System.out.println(" -> Max eval is now: " + maxEval);
-//                print(subState);
             }
-//            System.out.println("\n -> At depth " + depth + ": ["+Arrays.deepToString(states.toArray())+"], returning max: " + maxEval);
             return maxEval;
         }
         // min
@@ -90,16 +79,11 @@ public class MiniMaxMovingStrategy implements IMovingStrategy {
                 dropTokenInColumn(stateCopy, freeCol, player);
                 Pair<Double, Integer> currentEval = minimax(stateCopy, 1, depth - 1, freeCol);
                 
-//                states.add(currentEval);
-//                System.out.println("\nDepth[" + depth + "] -> Comparing (current, max): " + currentEval + ", " + maxEval);
                 if (currentEval.getA() <= minEval.getA()) {
                     minEval.setA(currentEval.getA());
                     minEval.setB(freeCol);
                 }
-//                System.out.println(" -> Max eval is now: " + maxEval);
-//                print(subState);
             }
-//            System.out.println("\n -> At depth " + depth + ": ["+Arrays.deepToString(states.toArray())+"], returning min: " + minEval);
             return minEval;
         }
     }

@@ -205,19 +205,10 @@ public class GameState implements IGameState {
     
     @Override
     public boolean checkIfGameOver(int[][] state) {
-        //MiniMaxMovingStrategy.print(state);
-        
-        for (int[] r : state) {
-            if (Arrays.toString(r).contains("1, 1, 1, 1")) {
-                System.out.println("YESSSSSSSSSSSSSSSSS");
-            }
-        }
-        
         // rows
         for (int row = 0; row < n; row++) {
             ArrayList<Integer> reduced = reduce(state[row]);
             if (contains4InARow(reduced)) {
-                System.out.println("YESSSSSSSSSSSSSSSSS");
                 return true;
             }
         }

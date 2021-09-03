@@ -103,11 +103,9 @@ public class InputHandler implements MouseMotionListener, MouseListener, IMoving
         CompletableFuture
                 // make a move and process it
                 .runAsync(() -> {
-                    System.out.println("Running async");
                     int move = gameState
                             .getCurrentPlayer()
                             .makeMove(gameState.getGrid());
-                    System.out.println("MOVE: " + move);
                     processMove(move);
                 })
                 .exceptionally(ex -> {
